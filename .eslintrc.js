@@ -7,5 +7,7 @@ module.exports = {
         "no-console": 0,
         "indent": ['error', 4],
         "no-param-reassign": 0,
+        "no-plusplus": 0,
+        "no-mixed-operators": 0,
     }
 };
