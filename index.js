@@ -193,3 +193,76 @@ function delay(func, wait, ...args) {
     }
     return setTimeout(func, +wait || 0, ...args)
 }
+
+/**
+ * 删除数组中的值
+ *
+ * @param {array} arr
+ * @param {any} element
+ * @returns {array}
+ */
+function remove(arr, element) {
+    return arr.slice(arr.indexOf(element), 1)
+}
+
+/**
+ * 数组最大值
+ *
+ * @param {array} arr
+ * @returns {number}
+ */
+function max(arr) {
+    // return Math.max.apply(null, arr) // es5
+    return Math.max(...arr)
+}
+
+/**
+ * 数组最小值
+ *
+ * @param {array} arr
+ * @returns {number}
+ */
+function min(arr) {
+    // return Math.min.apply(null, arr) // es5
+    return Math.min(...arr)
+}
+
+/**
+ * 数组求和
+ *
+ * @param {array} arr
+ * @returns {number}
+ */
+function sum(arr) {
+    return arr.reduce((a, b) => a + b)
+}
+
+/**
+ * 打乱数组
+ *
+ * @param {array} arr
+ * @returns {array}
+ */
+function upset(arr) {
+    return arr.sort(() => Math.random() - 0.5)
+}
+
+/**
+ * 字符串首字母大写
+ *
+ * @param {string} str
+ * @returns {string}
+ */
+function capitalize(str) {
+    return str.split('').forEach((element) => {
+        element.toUpperCase()
+    })
+}
+
+function debounce(func, wait, immediate = false) {
+
+}
+
+function throttle(func, wait, immediate = false) {
+
+}
