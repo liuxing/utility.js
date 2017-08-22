@@ -17,18 +17,6 @@ function unique(arr) {
 }
 
 /**
- * 判断是不是字符串
- *
- * @param {any} value
- * @returns {boolean}
- */
-
-function isString(value) {
-    const type = typeof value
-    return type === 'string' || (type === 'object' && value != null && !Array.isArray(value) && Object.prototype.toString.call(type) === '[object String]')
-}
-
-/**
  * 去除字符串前后空格
  *
  * @param {string} str
@@ -134,4 +122,74 @@ function base64decode(encodeStr, urlsafe = false, encoding = 'utf8') {
         return buf
     }
     return buf.toString(encoding)
+}
+
+/**
+ * 判断是不是字符串
+ *
+ * @param {any} value
+ * @returns {boolean}
+ */
+
+function isString(value) {
+    const type = typeof value
+    return type === 'string' || (type === 'object' && value != null && !Array.isArray(value) && Object.prototype.toString.call(type) === '[object String]')
+}
+
+/**
+ * 判断是不是数组
+ *
+ * @param {any} value
+ * @returns {boolean}
+ */
+function isArray(value) {
+    return Array.isArray ? Array.isArray(value) : Object.prototype.toString.call(value) === '[object Array]'
+}
+
+function isElement(value) {
+    return !!(value && value.nodeType === 1)
+}
+
+function isObject(obj) {
+    const type = typeof obj
+    return type === 'function' || type === 'object' && !!obj
+}
+
+function isArguments(value) {
+    return Object.prototype.toString.call(value) === '[object Arguments]'
+}
+
+function isFunction(value) {
+    return Object.prototype.toString.call(value) === '[object Function]'
+}
+
+function isNumber(value) {
+    return Object.prototype.toString.call(value) === '[object Number]'
+}
+
+function isDate(value) {
+    return Object.prototype.toString.call(value) === '[object Date]'
+}
+
+function isRegExp(value) {
+    return Object.prototype.toString.call(value) === '[object RegExp]'
+}
+
+function isError(value) {
+    return Object.prototype.toString.call(value) === '[object Error]'
+}
+
+/**
+ * 延迟执行函数
+ *
+ * @param {function} func The function to delay.
+ * @param {number} wait The number of milliseconds to delay invocation.
+ * @param {...*} args The arguments to invoke `func` with.
+ * @returns {number} Returns the timer id
+ */
+function delay(func, wait, ...args) {
+    if (typeof func !== 'function') {
+        throw new TypeError('Expected a function')
+    }
+    return setTimeout(func, +wait || 0, ...args)
 }
