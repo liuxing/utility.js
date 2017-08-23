@@ -24,7 +24,40 @@ function unique(arr) {
  * @returns {string}
  */
 function trim(str) {
+    return str.replace(/(^\s*)|(\s*$)/g, '')
+}
+
+/**
+ * 去除字符串后的空格
+ *
+ * @param {string} str
+ * @param {number}
+ * @returns {string}
+ */
+function trimEnd(str) {
+    return str.replace(/(\s*$)/g, '')
+}
+
+/**
+ * 去除字符串前的空格
+ *
+ * @param {string} str
+ * @param {number}
+ * @returns {string}
+ */
+function trimStart(str) {
     return str.replace(/(^\s*)/g, '')
+}
+
+/**
+ * 去除字符串所有空格
+ *
+ * @param {string} str
+ * @param {number}
+ * @returns {string}
+ */
+function trimAll(str) {
+    return str.replace(/\s+/g, '')
 }
 
 /**
@@ -238,7 +271,7 @@ function sum(arr) {
 }
 
 /**
- * 打乱数组
+ * 打乱数组 (非正式的乱序)
  *
  * @param {array} arr
  * @returns {array}
@@ -259,10 +292,102 @@ function capitalize(str) {
     })
 }
 
-function debounce(func, wait, immediate = false) {
-
+function clone(obj) {
+    const newObj = {}
+    for (const i in obj) {
+        newObj[i] = obj[i]
+    }
+    return newObj
 }
 
-function throttle(func, wait, immediate = false) {
+function cloneDeep(obj) {
+    const newObj = {}
+    for (const key in obj) {
+        if (typeof obj[key] === 'object') {
+            newObj[key] = cloneDeep(obj[key])
+        } else {
+            newObj[key] = obj[key]
+        }
+    }
+    return newObj
+}
 
+function has(obj, key) {
+    return obj != null && hasOwnProperty.call(obj, key)
+}
+
+/**
+ * 「记忆化」，存储中间运算结果，提高效率
+ *
+ * @param {function} func The function to have its output memoized.
+ * @param {function} [resolver] The function to resolve the cache key.
+ * @returns {function} Returns the new memoized function.
+ */
+function memoize(func, resolver) {
+    const memoized = function (...args) {
+        const key = resolver ? resolver.apply(this, args) : args[0]
+        const cache = memoized.cache
+        if (!has(cache, key)) {
+            cache[key] = func.apply(this, args)
+        }
+        return cache[key]
+    }
+    memoized.cache = {}
+    return memoized
+}
+
+// 斐波那契数列
+// const fibonacci = memoize(n => n < 2 ? n : fibonacci(n - 1) + fibonacci(n - 2))
+
+/**
+ * 数组乱序[洗牌]
+ * 最优的洗牌算法[Fisher-Yates shuffle](http://en.wikipedia.org/wiki/Fisher–Yates_shuffle)
+ * @param {array} array array The array to shuffle
+ * @returns {array} Returns the new shuffled array
+ */
+function shuffle(array) {
+    const length = array == null ? 0 : array.length
+    if (!length) {
+        return []
+    }
+    const shuffled = array.concat()
+    for (let index = 0; index < length; index++) {
+        const rand = Math.floor(Math.random() * length)
+        const temp = shuffled[rand]
+        shuffled[rand] = shuffled[index]
+        shuffled[index] = temp
+    }
+    return shuffled
+}
+
+// 从前往后遍历版 shuffle
+// function shuffle(array) {
+//     const length = array == null ? 0 : array.length
+//     if (!length) {
+//         return []
+//     }
+//     const shuffled = Array(length)
+//     for (let index = 0, rand; index < length; index++) {
+//         rand = Math.floor(Math.random() * index)
+//         if (rand !== index) shuffled[index] = shuffled[rand]
+//         shuffled[rand] = array[index]
+//     }
+//     return shuffled
+// }
+
+// console.log(shuffle([1, 2, 3, 4, 7, 10]))
+
+/**
+ * 随机返回数组中的一个元素
+ *
+ * @param {array} array  array The array to sample.
+ * @returns {*} Returns the random element.
+ */
+function sample(array) {
+    const length = array == null ? 0 : array.length
+    return length ? array[Math.floor(Math.random() * length)] : undefined
+}
+
+function flatten(arr) {
+    return arr.reduce((a, b) => [].concat(Array.isArray(a) && a ? flatten(a) : a, Array.isArray(b) && b ? flatten(b) : b), [])
 }
